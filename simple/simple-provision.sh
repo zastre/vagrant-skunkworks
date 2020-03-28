@@ -11,7 +11,7 @@ set -x -e
 
 # Must jump through a few hoops in order to ensure Python 3.6
 # is installed (otherwise Python 3.5 is the default)
-sudo apt-get -y install software-properties-common python-software-properties 
+apt-get -y install software-properties-common python-software-properties 
 add-apt-repository ppa:deadsnakes/ppa > /dev/null 2>&1 -y
 apt-get update > /dev/null 2>&1
 apt-get install -y python3.6 > /dev/null 2>&1
