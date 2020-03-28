@@ -28,3 +28,7 @@
 * X11 forwarding: enabled
 * host directory is mapped to `/home/vagrant/code`
 * provisioning via the shell script `medium-csc230-provision.sh`
+* Installed the MARS MIPS simulator:
+    * Link: https://courses.missouristate.edu/KenVollmar/mars/index.htm
+    * This depends upon Java
+
