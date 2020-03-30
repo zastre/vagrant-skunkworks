@@ -32,3 +32,13 @@
     * Link: https://courses.missouristate.edu/KenVollmar/mars/index.htm
     * This depends upon Java
 
+
+## Some tutorials, how-tos for Vagrant
+
+* http://www.thisprogrammingthing.com/2013/getting-started-with-vagrant/
+
+* https://www.howtoforge.com/setup-a-local-wordpress-development-environment-with-vagrant/
+
+* https://www.interserver.net/tips/kb/configure-wordpress-external-database/
+
+* (for idea on using `expect` during provisioning): https://gist.github.com/Mins/4602864

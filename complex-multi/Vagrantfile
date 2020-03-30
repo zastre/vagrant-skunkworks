@@ -1,8 +1,30 @@
 Vagrant.configure("2") do |config|
+    config.vm.define "db" do |db|
+        db.vm.box = "ubuntu/bionic64"
+        db.vm.hostname = 'db'
+        db.vm.box_url = "ubuntu/bionic64"
+
+        db.vm.provision :shell, path: "complex-multi-db-provision.sh"
+
+        db.vm.synced_folder ".", "/home/vagrant/code"
+
+        db.vm.network :private_network, ip: "192.168.56.102"
+        db.vm.network :forwarded_port, guest: 22, host: 10222, id: "ssh"
+
+        db.vm.provider :virtualbox do |v|
+            v.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
+            v.customize ["modifyvm", :id, "--memory", 512]
+            v.customize ["modifyvm", :id, "--name", "db"]
+        end
+    end
+
+
     config.vm.define "web", primary: true do |web|
         web.vm.box = "ubuntu/bionic64"
         web.vm.hostname = 'web'
         web.vm.box_url = "ubuntu/bionic64"
+
+        web.vm.provision :shell, path: "complex-multi-web-provision.sh"
 
         web.vm.synced_folder ".", "/home/vagrant/code"
 
@@ -17,20 +39,4 @@ Vagrant.configure("2") do |config|
     end
 
 
-    config.vm.define "db" do |db|
-        db.vm.box = "ubuntu/bionic64"
-        db.vm.hostname = 'db'
-        db.vm.box_url = "ubuntu/bionic64"
-
-        db.vm.synced_folder ".", "/home/vagrant/code"
-
-        db.vm.network :private_network, ip: "192.168.56.102"
-        db.vm.network :forwarded_port, guest: 22, host: 10222, id: "ssh"
-
-        db.vm.provider :virtualbox do |v|
-            v.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
-            v.customize ["modifyvm", :id, "--memory", 512]
-            v.customize ["modifyvm", :id, "--name", "db"]
-        end
-    end
 end
