@@ -20,17 +20,54 @@ $PROVISION_SCRIPT = <<EOF
     # Notice that `sudo` is used here throughout
 
     set -x -e     # verbose output, stop on any error
-
+    
+    sudo add-apt-repository ppa:ubuntu-toolchain-r/test
     sudo apt-get update -y
 
-    sudo apt-get install -y g++-5
-    sudo apt-get install -y gcc-5
-    sudo apt-get install -y python3.6
+    sudo apt-get install -y gcc-5 > /dev/null 2>&1
+    sudo apt-get install -y g++-5 > /dev/null 2>&1
 
-    sudo apt-get install -y python-pytest
-    sudo apt-get install -y valgrind
-    sudo apt-get install -y gdb
-    sudo apt-get install -y tree
+    # gcc-7 and g++-7 are default installed, but that
+    # might not necessarily be something upon which to
+    # depend...
+
+    sudo apt-get install -y gcc-9 > /dev/null 2>&1
+    sudo apt-get install -y g++-9 > /dev/null 2>&1
+
+    sudo apt-get install -y valgrind > /dev/null 2>&1
+    sudo apt-get install -y gdb > /dev/null 2>&1
+
+    sudo apt-get install -y python3.6 > /dev/null 2>&1
+    sudo apt-get install -y python-pytest > /dev/null 2>&1
+    sudo apt-get install -y tree > /dev/null 2>&1
+
+    # Configure alternatives for python (python2.7, python3.6)
+    # but where python3.6 is the default
+    # sudo update-alternatives --remove-all python
+    sudo update-alternatives --install /usr/bin/python \
+        python /usr/bin/python2.7 10
+    sudo update-alternatives --install /usr/bin/python \
+        python /usr/bin/python3.6 20
+
+    # Configure alternatives for g++ (g++-5, g++-7, g++-9)
+    # but where g++-9 is the default
+    # sudo update-alternatives --remove-all g++
+    sudo update-alternatives --install /usr/bin/g++ \
+        g++ /usr/bin/g++-5 10
+    sudo update-alternatives --install /usr/bin/g++ \
+        g++ /usr/bin/g++-7 20
+    sudo update-alternatives --install /usr/bin/g++ \
+        g++ /usr/bin/g++-9 30
+
+    # Configure alternatives for gcc (gcc-5, gcc-7, gcc-9)
+    # but where gcc-9 is the default
+    # sudo update-alternatives --remove-all gcc
+    sudo update-alternatives --install /usr/bin/gcc \
+        gcc /usr/bin/gcc-5 10
+    sudo update-alternatives --install /usr/bin/gcc \
+        gcc /usr/bin/gcc-7 20
+    sudo update-alternatives --install /usr/bin/gcc \
+        gcc /usr/bin/gcc-9 30
 
     touch /var/vagrant_provision
 EOF

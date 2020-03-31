@@ -1,12 +1,18 @@
-# Complex configuration (two server instances)
+# complex-multi
 
-* Idea: Provision an instance of WordPress where there is a `web` server
-instance and a separate `db` server instance.
+* Main purpose of this server is to show configuration and
+  provisioning for a two-server Vagrant system.
 
-* Also provision both `web` and `db` without requiring
-intervention or interaction.
+    1. Install WordPress on a `web` server
+       such that is uses the DBMS on the `db` server.
 
-* Assumption: The `db` instance is provisioned **first**, and only
+    1. Also provision both `web` and `db` without requiring
+       intervention or interaction.
+
+    1. After this is all done, point a web browser to `192.168.56.101`
+       and follow the steps to create a WordPress site.
+    
+* **Assumption**: The `db` instance is provisioned **first**, and only
 **after this succeeds** is the `web` instance provisioned. That is,
 Wordpress is installed on the `web` server and will require a running
 `db` server before any Wordpress-site setup is possible.
@@ -28,7 +34,7 @@ number no longer changing from `up` to `up`.
   Wordpress-site setup.
 
 
-## Configuring `db`
+## `db`: configuration and provisioning
 
 * `Vagrantfile`: `db` is given an address on the local network (i.e.,
 an `192.168.*.*` address). **Gotcha:** Configuration may not work if your
@@ -57,7 +63,8 @@ network already `192.168.56.102`.
 
     * Shell access of the  `db` instance is via `vagrant ssh db`.
 
-## Configuring `web`
+
+## `web`: configuring and provisioning
 
 * `Vagrantfile`: `web` is given an address on the local network (i.e.,
 `192.168.*.*` address). **Gotcha:** Configuration may not work if your
